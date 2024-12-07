@@ -41,6 +41,7 @@ ATTR_DEFROST = "defrost"
 ATTR_RSSI = "rssi"
 ATTR_SENSOR_RSSI = "sensor_rssi"
 ATTR_RUNSTATE = "runstate"
+ATTR_SENSOR_TEMP = "sensor_temperature"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
@@ -151,6 +152,7 @@ class KumoThermostat(CoordinatedKumoEntity, ClimateEntity):
         self._defrost = None
         self._rssi = None
         self._sensor_rssi = None
+        self._current_sensor_temperature = None
         self._runstate = None
         self._fan_modes = self._pykumo.get_fan_speeds()
         self._swing_modes = self._pykumo.get_vane_directions()
@@ -430,6 +432,8 @@ class KumoThermostat(CoordinatedKumoEntity, ClimateEntity):
             attr[ATTR_SENSOR_RSSI] = self._sensor_rssi
         if self._runstate is not None:
             attr[ATTR_RUNSTATE] = self._runstate
+        if self._current_sensor_temperature is not None:
+            attr[ATTR_SENSOR_TEMP] = self._current_sensor_temperature
 
         return attr
 
