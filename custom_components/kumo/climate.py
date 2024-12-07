@@ -117,6 +117,7 @@ class KumoThermostat(CoordinatedKumoEntity, ClimateEntity):
         "fan_mode",
         "swing_mode",
         "current_temperature",
+        "current_sensor_temperature",
         "target_temperature",
         "target_temperature_high",
         "target_temperature_low",
@@ -296,6 +297,15 @@ class KumoThermostat(CoordinatedKumoEntity, ClimateEntity):
     def _update_current_temperature(self):
         """Refresh cached current temperature."""
         self._current_temperature = self._pykumo.get_current_temperature()
+
+    @property
+    def current_sensor_temperature(self):
+        """Return the current sensor temperature."""
+        return self._current_sensor_temperature
+
+    def _update_current_sensor_temperature(self):
+        """Refresh cached current sensor temperature."""
+        self._current_sensor_temperature = self._pykumo.get_current_sensor_temperature()
 
     @property
     def target_temperature(self):
